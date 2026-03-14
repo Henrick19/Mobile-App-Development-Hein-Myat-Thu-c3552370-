@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:SoftSpot_Hein_Myat_Thu.Views"
+    x:Class="SoftSpot_Hein_Myat_Thu.AppShell">
+
+    <TabBar>
+        <ShellContent
+            Route="Home"
+            Title="Home"
+            Icon="tab_home.png"
+            ContentTemplate="{DataTemplate views:HomePage}" />
+        <ShellContent
+            Route="Favourites"
+            Title="Favourites"
+            Icon="tab_fav.png"
+            ContentTemplate="{DataTemplate views:FavouritesPage}" />
+        <ShellContent
+            Route="Profile"
+            Title="Profile"
+            Icon="tab_profile.png"
+            ContentTemplate="{DataTemplate views:ProfilePage}" />
+    </TabBar>
+
+</Shell>

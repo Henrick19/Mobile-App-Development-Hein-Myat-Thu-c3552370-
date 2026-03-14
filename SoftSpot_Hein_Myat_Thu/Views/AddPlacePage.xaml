@@ -1,0 +1,90 @@
+﻿<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SoftSpot_Hein_Myat_Thu.Views.AddPlacePage"
+    Title="Add a Quiet Place"
+    Shell.NavBarIsVisible="False">
+
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+            <Label Text="Add a Quiet Place" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <!-- back button -->
+            <Button Text="⬅"
+                    FontSize="24"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
+                    Clicked="OnBackClicked"
+                    HorizontalOptions="Start"
+                    Padding="0,8,0,12" />
+            <!-- place name -->
+            <Label Text="Place name" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Entry Placeholder="E.g., Bishan Public Library"
+				   Text="{Binding Name}" />
+            <!-- location -->
+            <Label Text="Location" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Entry Placeholder="Paste Google Maps link"
+				   Text="{Binding LocationLink}" />
+            <!-- type (picker) -->
+            <Label Text="Place type" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Picker SelectedItem="{Binding Type}">
+                <Picker.Items>
+                    <x:String>Coffee shop</x:String>
+                    <x:String>Library</x:String>
+                    <x:String>Park</x:String>
+                    <x:String>Study area</x:String>
+                    <x:String>N/A</x:String>
+                </Picker.Items>
+            </Picker>
+            <!-- noise level picker (string)..needed to change back to enum in viewmodel -->
+            <Label Text="Noise level" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Picker SelectedItem="{Binding NoiseLevel}">
+                <Picker.Items>
+                    <x:String>Low</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>High</x:String>
+                </Picker.Items>
+            </Picker>
+            <!-- crowd level picker (string)..needed to change back to enum in viewmodel -->
+            <Label Text="Crowd level" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Picker SelectedItem="{Binding CrowdLevel}">
+                <Picker.Items>
+                    <x:String>Low</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>High</x:String>
+                </Picker.Items>
+            </Picker>
+            <!-- rating -->
+            <Label Text="Rating" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+            <Picker ItemsSource="{Binding RatingOptions}"  
+            SelectedItem="{Binding Rating}" />
+            <!-- wifi -->
+            <Label Text="Wi-Fi" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <HorizontalStackLayout Spacing="8">
+                <CheckBox IsChecked="{Binding HasWifi}"
+						  Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"/>
+                <Label Text="Wi-Fi Available" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            </HorizontalStackLayout>
+            <!-- best time form !-->
+            <Label Text="Best Time to Visit" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Picker Grid.Column="0" Title="From" ItemsSource="{Binding BestTimeOptions}" SelectedItem="{Binding BestTimeFrom}"/>
+                <Picker Grid.Column="1" Title="To" ItemsSource="{Binding BestTimeOptions}" SelectedItem="{Binding BestTimeTo}"/>
+            </Grid>
+            <!-- description -->
+            <Label Text="Description (optional)" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Editor Placeholder="Short notes about the place"
+					HeightRequest="120"
+					Text="{Binding Description}" />
+            <!-- submit button -->
+            <Button Text="Submit"
+					Command="{Binding SubmitCommand}" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>
+	
+
+    
+    

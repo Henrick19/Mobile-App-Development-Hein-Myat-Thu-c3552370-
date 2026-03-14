@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="SoftSpot_Hein_Myat_Thu.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:SoftSpot_Hein_Myat_Thu.WinUI">
+
+</maui:MauiWinUIApplication>

@@ -1,0 +1,16 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SoftSpot_Hein_Myat_Thu"
+             xmlns:converters="clr-namespace:SoftSpot_Hein_Myat_Thu.Converters"
+             x:Class="SoftSpot_Hein_Myat_Thu.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:IntToStarsStringConverter x:Key="IntToStarsStringConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
