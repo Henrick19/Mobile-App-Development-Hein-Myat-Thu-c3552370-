@@ -45,6 +45,10 @@
     <!-- filter bg helper -->
     <Color x:Key="FilterOff">#F1F1F1</Color>
     <Color x:Key="FilterOffDark">#404040</Color>
+    
+    <!-- noti unread bg color helper -->
+    <Color x:Key="UnreadRowLight">#E8F0FE</Color>
+    <Color x:Key="UnreadRowDark">#1E2A3A</Color>
 
  
 

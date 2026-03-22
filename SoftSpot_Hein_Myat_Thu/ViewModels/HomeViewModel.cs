@@ -76,6 +76,45 @@ public class HomeViewModel : BaseViewModel
         }
     }
 
+    // Unread noti count
+    private int _unreadNotiCont;
+    public int UnreadNotiCont
+    {
+        get
+        {
+            return _unreadNotiCont;
+        }
+        set
+        {
+            if (SetProperty(ref _unreadNotiCont, value))
+            {
+                // Tell UI these properties also changed
+                OnPropertyChanged(nameof(ShowUnreadBadge));
+                OnPropertyChanged(nameof(UnreadBadgeText));
+            }
+        }
+    }
+
+    // helper properties
+    public bool ShowUnreadBadge
+    {
+        get
+        {
+            return UnreadNotiCont > 0;
+        }
+    }
+
+    public string UnreadBadgeText
+    {
+        get
+        {
+            if (UnreadNotiCont > 99)
+                return "99+";
+
+            return UnreadNotiCont.ToString();
+        }
+    }
+
     public ICommand LoadCommand { get; } // Command to load places when the page appears
 
     // Command to toggle the filter when the button is clicked
@@ -122,6 +161,7 @@ public class HomeViewModel : BaseViewModel
         _allPlaces = await _placeService.GetAllPlacesAsync();
 
         ApplyFilters();
+        await RefreshUnreadCountAsync();
     }
 
     private async void OnPlaceTapped(Place place) // it receives the Place object that was tapped in the UI
@@ -135,6 +175,21 @@ public class HomeViewModel : BaseViewModel
         parameters.Add("Place", place);
 
         await Shell.Current.GoToAsync("DetailsPage", parameters);
+    }
+
+    // method to refresh unread count
+    internal async Task RefreshUnreadCountAsync()
+    {
+        var notificationList = await _storageService.GetAllNotificationsAsync();
+        int count = 0;
+        foreach (var noti in notificationList)
+        {
+            if (!noti.IsRead)
+            {
+                count++;
+            }
+        }
+        UnreadNotiCont = count;
     }
 
     // Method to apply the filter to the places

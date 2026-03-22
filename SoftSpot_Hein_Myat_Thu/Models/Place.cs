@@ -3,6 +3,7 @@ namespace SoftSpot_Hein_Myat_Thu.Models;
 
 public class Place
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString(); // special id
     public string Name { get; set; }
     public string LocationLink { get; set; }
     public string Type { get; set; }
@@ -21,6 +22,34 @@ public class Place
     public int DisplayStarCount
     {
         get {  return Rating; }
+    }
+
+    // filled and unfilled dots for noise and crowd level for detail page
+    
+    [JsonIgnore]
+    public int FilledNoiseDots
+    {
+        get
+        {
+            int value = (int)NoiseLevel;
+
+            value += 2;
+
+            return value;
+        }
+    }
+
+    [JsonIgnore]
+    public int FilledCrowdDots
+    {
+        get
+        {
+            int value = (int)CrowdLevel;
+
+            value = value + 2;
+
+            return value;
+        }
     }
 
 }

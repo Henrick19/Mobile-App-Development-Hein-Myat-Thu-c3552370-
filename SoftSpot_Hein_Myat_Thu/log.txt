@@ -1,0 +1,45 @@
+﻿17/03/26 - implementing details page (2.5 hrs)
+		 - I've already got tapped place's detail via [QueryProperty()]
+		 - trying to display noise and crowd level with filled and unfilled circle
+			- OK problem solved
+			- to display dots based on low, medium, high...i need int to map those enum and to display dots
+			- luckly ENUM r actually numbers underneath so i manually assigned them int in Enum
+			- and included getters called FilledNoiseDots and FilledCrowdDots in models 
+			- and i convert them into dots in converter
+
+18/03/26 - Still working on details page
+		 - since i assign int to enums manually, it affacted in homepage so i should probably create a method that change enums to int, rather than assigning manually
+			- it worked! +2 to enum so low (0) becomes 2 (2 filled dots), medium (1) becomes 3 (3 filled dots), high (2) becomes 5 (5 filled dots)
+		 - detail page UI DONE! (1 HRS)
+
+		 - implementing logic (1 hrs working)
+			- if user click "ADD TO FAV" , it need to change the IsFavourite value via service so we need some methods in PlaceService.cs
+			- need to figure out how to change ui button design and text change after click
+
+20/03/26 - Detail page done (1 hr)
+
+21/03/26 - Starts working on notification page, there r 5 types of noti
+			- place addition noti (this come from setting preference)
+			- save / remove from fav noti
+			- noti when quiet based on best time (not instant noti, storge that noti in file and displays when best time comes)
+			- clear all favourites noti
+			- need notification model
+			- since noti r stored in storage, need some method to get them from storage and save noti to the storage in storage service
+			- in noti service, i need method to show noti and to save those new noti to the storage via save method from storge service
+			- service done  
+			- typo error is annoying..
+
+		- working on view and viewModel
+		- trying to figure out how to set different background for read and unread noti 
+			- ok i used converters to change bool isread value to color and i put some helper color in app resource
+			- and ui bind to IsRead
+			- use converter for icon as well
+			- use converter for created time as well from datetime to relative
+			- there will be a dot for unread msg ..so add property for it in model and ui bind to it using Ellipse.IsVisible
+			- on noti bell from home page, there should be numbers count for unread noti
+				- add property for it in the model and bind to it
+			- all done but my ui is not loading any noti
+				- fixed! i forgot to put notiservice in constructors and forgot to call shownoti methods 
+			- noti page all done (4.5 hrs)
+		
+

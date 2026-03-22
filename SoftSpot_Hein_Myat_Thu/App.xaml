@@ -11,6 +11,11 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:IntToStarsStringConverter x:Key="IntToStarsStringConverter" />
+            <converters:IntToDotsConverter x:Key="IntToDotsConverter" />
+            <converters:BoolToWifiStringConverter x:Key="BoolToWifiStringConverter" />
+            <converters:UnreadNotiBackgroundCoverter x:Key="UnreadNotiBackgroundCoverter" />
+            <converters:NotificationIconConverter x:Key="NotificationIconConverter" />
+            <converters:DateTimeToRelativeTimeConverter x:Key="DateTimeToRelativeTimeConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

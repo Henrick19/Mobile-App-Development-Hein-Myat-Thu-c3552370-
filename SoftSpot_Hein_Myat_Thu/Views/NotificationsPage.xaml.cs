@@ -11,6 +11,12 @@ public partial class NotificationsPage : ContentPage
         BindingContext = _vm = vm;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _vm.LoadCommand.Execute(null);
+    }
+
     private async void OnBackClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("..");

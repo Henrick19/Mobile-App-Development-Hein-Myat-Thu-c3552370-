@@ -73,18 +73,32 @@
 				   FontAttributes="Bold"
 				   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"/>
 
-			<Button Grid.Column="1"
-					Text="🔔"
-					FontSize="22"
-					WidthRequest="40"
-					HeightRequest="40"
-					Padding="0"
-					BackgroundColor="Transparent"
-					TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
-					Clicked="OnNotificationsClicked"/>
-					<!-- on click => go to noti page -->
+            <Grid Grid.Column="1" WidthRequest="40" HeightRequest="40">
+                <Button Grid.Column="1"
+						Text="🔔"
+						FontSize="22"
+						WidthRequest="40"
+						HeightRequest="40"
+						Padding="0"
+						BackgroundColor="Transparent"
+						TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+						Clicked="OnNotificationsClicked"/>
+                <!-- on click => go to noti page -->
 
-            <Button Grid.Column="2"
+                <!-- Unread noti num count-->
+                <Frame Padding="4,0" Margin="0" CornerRadius="10" BorderColor="Transparent"
+					   BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
+					   HorizontalOptions="End" VerticalOptions="Start"
+					   IsVisible="{Binding ShowUnreadBadge}" >
+                    <Label Text="{Binding UnreadBadgeText}"
+						   FontSize="10"
+						   FontAttributes="Bold"
+						   TextColor="White" />
+                </Frame>
+            </Grid>
+
+
+			<Button Grid.Column="2"
 					Text="⚙️"
 					FontSize="22"
 					Margin="4,0,0,0"

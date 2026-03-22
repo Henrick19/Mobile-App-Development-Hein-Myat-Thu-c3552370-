@@ -31,6 +31,48 @@ public class PlaceService : IPlaceService
         await _storageService.SaveAsync(FileName, places);
     }
 
+    // for addtofav button from detail page
+    public async Task AddToFavouriteAsync(Place place)
+    {
+        var places = await GetAllPlacesAsync();
+        var foundPlace = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name); // give the place that match ID and name firstly
+        if (foundPlace != null)
+        {
+            foundPlace.IsFavorite = true;
+
+            await _storageService.SaveAsync(FileName, places); // save updated list back to storage
+        }
+    }
+
+    // remove from fav
+    public async Task RemoveFromFavouriteAsync(Place place)
+    {
+        var places = await GetAllPlacesAsync();
+        var foundPlaces = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name);
+        if (foundPlaces != null)
+        {
+            foundPlaces.IsFavorite = false;
+
+            await _storageService.SaveAsync(FileName, places);
+        }
+    }
+
+    // for notify when quiet
+
+    public async Task SetNotifyWhenQuietAsync(Place place, bool value)
+    {
+        var places = await GetAllPlacesAsync();
+
+        var foundPlace = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name);
+
+        if (foundPlace != null)
+        {
+            foundPlace.NotifyWhenQuiet = value;
+
+            await _storageService.SaveAsync(FileName, places);
+        }
+    }
+
     private static List<Place> GetSeedPlaces() // This method creates a list of default places to be used when the storage is empty. 
     {
         List<Place> places = new List<Place>();

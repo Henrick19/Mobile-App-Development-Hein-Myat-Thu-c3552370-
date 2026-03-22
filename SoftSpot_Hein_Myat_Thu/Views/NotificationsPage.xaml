@@ -7,19 +7,96 @@
     Title="Notifications"
     Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-            <Label Text="Notifications" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+	<Grid RowDefinitions="Auto, *, Auto" Padding="0">
+		<Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="20,16" VerticalOptions="Center">
+			<!-- back arrow, page title, and mark all read -->
+			<Button Grid.Column="0"
+					Text="⬅"
+					FontSize="24"
+					BackgroundColor="Transparent"
+					TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
+					Clicked="OnBackClicked"
+					HorizontalOptions="Start"
+					Padding="0,8,0,12" />
+			<Label Grid.Column="1" Text="Notifications" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+			<Button Grid.Column="2"
+					Text="Mark All Read"
+					FontSize="24"
+					BackgroundColor="Transparent"
+					TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+					Command="{Binding MarkAllReadCommand}"
+					HorizontalOptions="End"
+					Padding="0" />	
+		</Grid>
 
-            <Button Text="←"
-				FontSize="24"
-                BackgroundColor="Transparent"
-				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
-				Clicked="OnBackClicked"
-                HorizontalOptions="Start" 
-                Padding="0,8,0,16" />
+		<BoxView Grid.Row="0" HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" VerticalOptions="End" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Notifications}" Margin="0,8,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Notification">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid Padding="20,14" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12"
+                              BackgroundColor="{Binding IsRead, Converter={StaticResource UnreadNotiBackgroundCoverter}}">
+                            <!-- icon: pin or bell -->
+                            <Label Grid.Column="0" VerticalOptions="Start" Margin="0,2,0,0"
+                                   Text="{Binding Type, Converter={StaticResource NotificationIconConverter}}"
+                                   FontSize="20" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                <Label Text="{Binding Title}"
+                                       FontAttributes="Bold"
+                                       FontSize="15"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+                                <Label Text="{Binding Message}"
+                                       FontSize="13"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                                <Label Text="{Binding CreatedAt, Converter={StaticResource DateTimeToRelativeTimeConverter}}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                            </VerticalStackLayout>
+
+                            <!-- Unread dot  -->
+                            <Ellipse Grid.Column="2" WidthRequest="10" HeightRequest="10"
+                                     Fill="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+                                     HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,4,0">
+                                <Ellipse.IsVisible>
+                                    <Binding Path="ShowUnreadDot" />
+                                </Ellipse.IsVisible>
+                            </Ellipse>
+
+                            <!-- Trash: tap to delete this notification -->
+                            <Button Grid.Column="3"
+                                    Text="🗑️"
+                                    FontSize="20"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                                    Command="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Padding="8"
+                                    VerticalOptions="Center" />
+
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" Margin="20,0,20,0" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Clear All button at bottom -->
+        <Button Grid.Row="2"
+                Text="Clear All"
+                Command="{Binding ClearAllCommand}"
+                HorizontalOptions="Center"
+                Margin="0,16,0,24"
+                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray600}}"
+                TextColor="{AppThemeBinding Light=Black, Dark={StaticResource Gray100}}"
+                BorderColor="{AppThemeBinding Light=Black, Dark={StaticResource Gray300}}"
+                BorderWidth="1"
+                CornerRadius="8"
+                Padding="24,12"
+                FontAttributes="Bold" />
+
+    </Grid>
 
 </ContentPage>

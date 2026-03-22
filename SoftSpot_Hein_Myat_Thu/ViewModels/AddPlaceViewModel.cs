@@ -1,4 +1,5 @@
-﻿using SoftSpot_Hein_Myat_Thu.Models;
+﻿using Plugin.LocalNotification;
+using SoftSpot_Hein_Myat_Thu.Models;
 using SoftSpot_Hein_Myat_Thu.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -7,7 +8,8 @@ namespace SoftSpot_Hein_Myat_Thu.ViewModels;
 
 public class AddPlaceViewModel : BaseViewModel
 {
-    private readonly IPlaceService _placeService; 
+    private readonly IPlaceService _placeService;
+    private readonly IAppNotificationService _notificationService;
 
     // special collection for best time dropdowns
     public ObservableCollection<string> _bestTimeOptions = new ObservableCollection<string>();
@@ -165,9 +167,10 @@ public class AddPlaceViewModel : BaseViewModel
 
     public ICommand SubmitCommand { get; } // command bound to the "Submit" button in the UI
 
-    public AddPlaceViewModel(IPlaceService placeService)
+    public AddPlaceViewModel(IPlaceService placeService, IAppNotificationService notificationService)
     {
         _placeService = placeService;
+        _notificationService = notificationService;
         LoadBestTimeOptions(); // load the best time options for the dropdown
         SubmitCommand = new Command(ExecuteSubmitCommand);
     }
@@ -177,8 +180,8 @@ public class AddPlaceViewModel : BaseViewModel
     {
         BestTimeOptions.Clear();
         BestTimeOptions.Add(""); // optional: no best time
-        foreach (var h in new[] { "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm", "12am" })
-            BestTimeOptions.Add(h);
+        foreach (var hr in new[] { "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm", "12am" })
+            BestTimeOptions.Add(hr);
     }
 
     public async void ExecuteSubmitCommand()
@@ -240,6 +243,11 @@ public class AddPlaceViewModel : BaseViewModel
 
         // save the new place using the service
         await _placeService.AddAsync(newPlace);
+
+        await _notificationService.ShowNotification(
+            "New place added",
+            $"{newPlace.Name} was added to SoftSpot.",
+            NotificationType.NewPlaceAlert);
 
         // reset the form
         Name = string.Empty;
