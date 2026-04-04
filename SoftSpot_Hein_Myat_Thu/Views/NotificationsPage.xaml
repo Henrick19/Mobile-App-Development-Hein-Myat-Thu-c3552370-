@@ -5,7 +5,8 @@
     xmlns:models="clr-namespace:SoftSpot_Hein_Myat_Thu.Models"
     x:Class="SoftSpot_Hein_Myat_Thu.Views.NotificationsPage"
     Title="Notifications"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
 	<Grid RowDefinitions="Auto, *, Auto" Padding="0">
 		<Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="20,16" VerticalOptions="Center">

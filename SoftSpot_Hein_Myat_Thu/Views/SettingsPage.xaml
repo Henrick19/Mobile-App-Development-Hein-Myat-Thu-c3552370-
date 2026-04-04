@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SoftSpot_Hein_Myat_Thu.Views.SettingsPage"
     Title="Settings"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
 	<ScrollView>
-		<VerticalStackLayout Padding="20" Spacing="20">
+		<VerticalStackLayout Padding="20" Spacing="0">
             <Label Text="Settings" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
             
 			<Button Text="←"
@@ -17,8 +18,94 @@
 					Clicked="OnBackClicked"
                     HorizontalOptions="Start" 
                     Padding="0,8,0,16" />
-			
-		</VerticalStackLayout>
+
+            <!-- Notifications section -->
+            <HorizontalStackLayout Spacing="8" Margin="0,0,0,8">
+                <Label Text="🔔" FontSize="18" VerticalOptions="Center" />
+                <Label Text="Notifications"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,Auto" Padding="0,12,0,16" ColumnSpacing="12" VerticalOptions="Center">
+                <Label Grid.Column="0"
+                       Text="New place alerts"
+                       FontSize="15"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                       VerticalOptions="Center" />
+                <CheckBox Grid.Column="1"
+                          IsChecked="{Binding NewPlaceAlert}"
+                          VerticalOptions="Center"
+                          Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+            </Grid>
+            
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" Margin="0,0,0,0" />
+
+            <!-- Preferences section -->
+            <HorizontalStackLayout Spacing="8" Margin="0,20,0,8">
+                <Label Text="🎯" FontSize="18" VerticalOptions="Center" />
+                <Label Text="Preferences"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Grid RowDefinitions="Auto,Auto" Padding="0,12,0,16" RowSpacing="12">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                    <Label Grid.Column="0"
+                           Text="Quiet level:"
+                           FontSize="15"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                           VerticalOptions="Center" />
+                    <Picker Grid.Column="1"
+                            Title="Select"
+                            ItemsSource="{Binding QuietLevelOptions}"
+                            SelectedItem="{Binding PreferredQuietLevel}"
+                            WidthRequest="120"
+                            VerticalOptions="Center" />
+                </Grid>
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                    <Label Grid.Column="0"
+                           Text="Crowd level:"
+                           FontSize="15"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                           VerticalOptions="Center" />
+                    <Picker Grid.Column="1"
+                            Title="Select"
+                            ItemsSource="{Binding CrowdLevelOptions}"
+                            SelectedItem="{Binding PreferredCrowdLevel}"
+                            WidthRequest="120"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+            
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" Margin="0,0,0,0" />
+
+            <!-- Appearance section -->
+            <HorizontalStackLayout Spacing="8" Margin="0,20,0,8">
+                <Label Text="🌙" FontSize="18" VerticalOptions="Center" />
+                <Label Text="Appearance"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Grid ColumnDefinitions="*,Auto" Padding="0,12,0,24" ColumnSpacing="12" VerticalOptions="Center">
+                <Label Grid.Column="0"
+                       Text="Light / Dark Mode"
+                       FontSize="15"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                       VerticalOptions="Center" />
+                <Switch Grid.Column="1"
+                        IsToggled="{Binding DarkMode}"
+                        VerticalOptions="Center"
+                        OnColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+            </Grid>
+
+        </VerticalStackLayout>
 	</ScrollView>
     
 </ContentPage>

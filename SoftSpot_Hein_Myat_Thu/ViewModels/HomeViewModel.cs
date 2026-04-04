@@ -158,7 +158,7 @@ public class HomeViewModel : BaseViewModel
 
     private async Task LoadPlaces()
     {
-        _allPlaces = await _placeService.GetAllPlacesAsync();
+        _allPlaces = await _placeService.GetPlacesAsync();
 
         ApplyFilters();
         await RefreshUnreadCountAsync();
@@ -250,14 +250,100 @@ public class HomeViewModel : BaseViewModel
             if (includePlace)
             {
                 filtered.Add(place);
-            }
+            } 
+        }
+        // sort the filtered list based on user preferences 
+
+        string quietPref = Preferences.Get("PreferredQuietLevel", "N/A");
+        string crowdPref = Preferences.Get("PreferredCrowdLevel", "N/A");
+
+        bool hasQuietPref = quietPref != "N/A";
+        bool hasCrowdPref = crowdPref != "N/A";
+
+        if (hasQuietPref || hasCrowdPref)
+        {
+            var preferredQuiet = GetPreferredNoiseLevel(); // this will return enum so that we can cast it into int and do math
+            var preferredCrowd = GetPreferredCrowdLevel();
+
+            filtered = filtered
+                .OrderBy(p =>
+                {
+                    int quietScore = 0;
+                    int crowdScore = 0;
+
+                    // Calculate quiet preference difference
+                    if (hasQuietPref)
+                    {
+                        quietScore = Math.Abs((int)p.NoiseLevel - (int)preferredQuiet);
+                    }
+                    
+                    // Calculate crowd preference difference
+                    if (hasCrowdPref)
+                    {
+                        crowdScore = Math.Abs((int)p.CrowdLevel - (int)preferredCrowd);
+                    }
+
+                    // Total score (lower = better)
+                    return quietScore + crowdScore;
+                })
+                .ThenBy(p => p.Name)
+                .ToList(); 
         }
 
-        // Add filtered places to the ObservableCollection
+        // Add final filtered places to the ObservableCollection
         foreach (var place in filtered)
         {
             _places.Add(place);
         }
-    } 
+
+        
+    }
+
+
+    private static NoiseLevel GetPreferredNoiseLevel()
+    {
+        // Get saved value from Preferences
+        string value = Preferences.Get("PreferredQuietLevel", "N/A");
+
+        // Convert string to NoiseLevel enum
+        switch (value)
+        {
+            case "Low":
+                return NoiseLevel.Low;
+
+            case "Medium":
+                return NoiseLevel.Medium;
+
+            case "High":
+                return NoiseLevel.High;
+
+            default:
+                // Default if nothing is set
+                return NoiseLevel.Low;
+        }
+    }
+
+    private static CrowdLevel GetPreferredCrowdLevel()
+    {
+        // Get saved value from Preferences
+        string value = Preferences.Get("PreferredCrowdLevel", "N/A");
+
+        // Convert string to CrowdLevel enum
+        switch (value)
+        {
+            case "Low":
+                return CrowdLevel.Low;
+
+            case "Medium":
+                return CrowdLevel.Medium;
+
+            case "High":
+                return CrowdLevel.High;
+
+            default:
+                // Default if nothing is set
+                return CrowdLevel.Low;
+        }
+    }
 
 }

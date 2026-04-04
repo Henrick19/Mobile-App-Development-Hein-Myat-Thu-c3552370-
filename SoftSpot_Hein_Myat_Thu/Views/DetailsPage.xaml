@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SoftSpot_Hein_Myat_Thu.Views.DetailsPage"
     Title="Place Details"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
     <Grid RowDefinitions="*">
         <ScrollView Grid.Row="0">
@@ -124,7 +125,7 @@
                 
                 <!-- buttons -->
                 <VerticalStackLayout Spacing="10" Margin="50,12,50,0" HorizontalOptions="Fill">
-                    <Button Text="♥ Save to Favourites"
+                    <Button Text="❤️ Save to Favourites"
                             HorizontalOptions="Fill"
                             Command="{Binding AddToFavouriteCommand}"
                             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}"
@@ -158,9 +159,9 @@
                             <DataTrigger TargetType="Button"
                                          Binding="{Binding NotifyWhenQuiet}"
                                          Value="True">
-                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray400}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
                                 <Setter Property="TextColor" Value="White" />
-                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray300}}" />
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
                                 <Setter Property="Text" Value="🔔 Quiet alert set" />
                             </DataTrigger>
                         </Button.Triggers>

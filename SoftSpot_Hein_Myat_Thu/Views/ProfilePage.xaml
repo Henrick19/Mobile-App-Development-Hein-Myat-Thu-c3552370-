@@ -1,13 +1,98 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SoftSpot_Hein_Myat_Thu.Views.ProfilePage"
     Title="Profile"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="True">
 
-	<VerticalStackLayout Padding="20" Spacing="20">
-		<Label Text="Profile" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
-	</VerticalStackLayout>
-	
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="0">
+
+            <!-- Avatar + name + tagline -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,12,0,8">
+                <Frame WidthRequest="80"
+                       HeightRequest="80"
+                       CornerRadius="40"
+                       HasShadow="False"
+                       BorderColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+                       Padding="0"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray400}}">
+                    <Label Text="👤"
+                           FontSize="40"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Frame>
+            </HorizontalStackLayout>
+            <Label Text="Guest User"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,4" />
+            <Label Text="Explore Quite Places"
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20" />
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" Margin="0,0,0,0" />
+
+            <!-- Favourite Places -->
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  Padding="0,16"
+                  ColumnSpacing="12">
+                <Label Grid.Column="0" Text="❤️" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="Favourite Places" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="›" FontSize="20" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" VerticalOptions="Center" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFavouritesClicked" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" Margin="0,0,0,0" />
+
+            <!-- Notifications -->
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  Padding="0,16"
+                  ColumnSpacing="12">
+                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="4" VerticalOptions="Center">
+                    <Label Grid.Column="0" Text="🔔" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" VerticalOptions="Center" />
+                    <Frame Grid.Column="1" Padding="6,2" CornerRadius="10" BorderColor="Transparent"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
+                           IsVisible="{Binding UnreadNotificationCount}"
+                           VerticalOptions="Center">
+                        <Label Text="{Binding UnreadNotificationCount}"
+                               FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light=White, Dark=White}" />
+                    </Frame>
+                </Grid>
+                <Label Grid.Column="1" Text="Notifications" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="›" FontSize="20" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" VerticalOptions="Center" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotificationsClicked" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" Margin="0,0,0,0" />
+
+            <!-- Menu: Settings -->
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  Padding="0,16"
+                  ColumnSpacing="12">
+                <Label Grid.Column="0" Text="⚙" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="Settings" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="›" FontSize="20" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" VerticalOptions="Center" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSettingsClicked" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" Margin="0,0,0,24" />
+
+            <!-- Version -->
+            <Label Text="Version 1.0"
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"
+                   HorizontalOptions="Center"
+                   Margin="0,16,0,32" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

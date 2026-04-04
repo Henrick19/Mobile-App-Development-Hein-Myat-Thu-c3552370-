@@ -10,18 +10,14 @@
 18/03/26 - Still working on details page
 		 - since i assign int to enums manually, it affacted in homepage so i should probably create a method that change enums to int, rather than assigning manually
 			- it worked! +2 to enum so low (0) becomes 2 (2 filled dots), medium (1) becomes 3 (3 filled dots), high (2) becomes 5 (5 filled dots)
-		 - detail page UI DONE! (1 HRS)
+		 - detail page DONE! (1 HRS)
 
-		 - implementing logic (1 hrs working)
-			- if user click "ADD TO FAV" , it need to change the IsFavourite value via service so we need some methods in PlaceService.cs
-			- need to figure out how to change ui button design and text change after click
-
-20/03/26 - Detail page done (1 hr)
+	
 
 21/03/26 - Starts working on notification page, there r 5 types of noti
 			- place addition noti (this come from setting preference)
 			- save / remove from fav noti
-			- noti when quiet based on best time (not instant noti, storge that noti in file and displays when best time comes)
+			- noti when quiet based on best time (schedule noti)
 			- clear all favourites noti
 			- need notification model
 			- since noti r stored in storage, need some method to get them from storage and save noti to the storage in storage service
@@ -41,5 +37,29 @@
 			- all done but my ui is not loading any noti
 				- fixed! i forgot to put notiservice in constructors and forgot to call shownoti methods 
 			- noti page all done (4.5 hrs)
-		
+
+1/04/26 - moving storage from json to SQLite (1 hr)
+
+2/04/26 - profile page implimantation (1 hr)
+
+3/04/26 - fav page implementation (2 hrs)
+		- fav page is not displaying any place, i need to figure out why
+			- cause that problem is that the list is bound to the wrong property naem
+			- viewModel exposes FavouritePlaces with "u" but in xaml, i bind to "FavoritePlaces" without "u" so it is not working
+
+		- setting page implementation (3 hr)
+			- I need to make home screen to display places based on user preference 
+				- fixed! it was logical error
+			- I changed the switch to dark mode in the settings, but when I restart the app, it became light mode with dark mode switch on
+				- what caused that was 
+				DarkMode was stored in Preferences and the switch was bound to that, but UserAppTheme was only updated when I toggled the switch in code.
+				On a fresh launch nothing applied the saved value, so the app stayed light while the switch still showed dark.
+
+				- so retrieve the saved dark mode value from preferences and apply it to UserAppTheme in the constructor of App.xaml.cs, ensuring that the app theme is set correctly on startup based on the saved preference.
+
+4/04/26 - my got crashed when i tried to run on my android (1hr)
+		- after debugging, i found out that the problem is in db storage
+		On a fresh app install, the SQLite database is created but tables are not yet initialized. 
+		When the app loads, a query is executed before the Place table exists, causing an error and making the app crash.
+		- To fix this, I need to ensure that the database tables are created before any queries are executed.
 

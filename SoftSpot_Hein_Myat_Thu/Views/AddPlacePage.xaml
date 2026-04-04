@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SoftSpot_Hein_Myat_Thu.Views.AddPlacePage"
     Title="Add a Quiet Place"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
 
     <ScrollView>

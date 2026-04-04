@@ -1,52 +1,84 @@
-﻿using System.Text.Json;
+﻿using SQLite;
 using SoftSpot_Hein_Myat_Thu.Models;
 
 namespace SoftSpot_Hein_Myat_Thu.Services;
 
 public class StorageService : IStorageService
 {
-    private const string NotificationsFileName = "notifications.json";
-    private string GetFilePath(string fileName)  // get the file path in the app data directory for the given file name
+    private const string DatabaseFileName = "softspot.db3";
+
+    private readonly SQLiteAsyncConnection _db; // async connection
+
+  
+    private bool _initialized;
+
+    public StorageService()
     {
-        return Path.Combine(FileSystem.AppDataDirectory, fileName);
+        var dbPath = Path.Combine(FileSystem.AppDataDirectory, DatabaseFileName);
+        _db = new SQLiteAsyncConnection(dbPath);
     }
 
-    public async Task<T?> LoadAsync<T>(string fileName) // loads data of type T from a JSON file. 
+    private async Task EnsureDBInitializedAsync()
     {
-        var path = GetFilePath(fileName);
-
-        if (!File.Exists(path))
+        if (_initialized)
         {
-            return default;
+            return;
         }
 
-        var json = await File.ReadAllTextAsync(path); // read the JSON content from the file
-        return JsonSerializer.Deserialize<T>(json); // deserialize the JSON content into an object of type T and return it
+        await _db.CreateTableAsync<Place>();
+        await _db.CreateTableAsync<Notification>();
+        _initialized = true;   
+        
     }
 
-    public async Task SaveAsync<T>(string fileName, T data) // saves data of type T to a JSON file
+    // get all places from db
+    public async Task<List<Place>> GetAllPlacesAsync()
     {
-        var path = GetFilePath(fileName);
-        var json = JsonSerializer.Serialize(data); // serialize the data object into a JSON string
-        await File.WriteAllTextAsync(path, json);
-
+        await EnsureDBInitializedAsync();
+        return await _db.Table<Place>().ToListAsync(); // get all places from db
     }
 
+    public async Task SavePlacesAsync(List<Place> places)
+    {
+        await EnsureDBInitializedAsync();
+
+        await _db.DeleteAllAsync<Place>(); // remove existing places to avoid duplication
+
+        if (places.Count > 0)
+        {
+            await _db.InsertAllAsync(places); // insert new places into db
+        }
+    }
+
+    // get all notifications from db
     public async Task<List<Notification>> GetAllNotificationsAsync()
     {
-        var notiList = await LoadAsync<List<Notification>>(NotificationsFileName); // load noti from storage
+        await EnsureDBInitializedAsync();
 
-        // if nothing in the file, create a new empty list
-        if (notiList == null)
+        var list = await _db.Table<Notification>().ToListAsync(); // get all notifications from db
+
+        // ensure every noti has an ID
+        foreach (var noti in list)
         {
-            notiList = new List<Notification>();
+            if (string.IsNullOrEmpty(noti.Id))
+            {
+                noti.Id = Guid.NewGuid().ToString(); // assign new ID if missing
+            }
         }
-
-        return notiList;
+        return list;
     }
 
-    public async Task SaveNotificationsAsync(List<Notification> notificationList) 
-    { 
-        await SaveAsync(NotificationsFileName, notificationList);
+    // save notifications to db
+    public async Task SaveNotificationsAsync(List<Notification> notifications)
+    {
+        await EnsureDBInitializedAsync();
+
+        await _db.DeleteAllAsync<Notification>(); // remove existing notifications to avoid duplication
+        if (notifications.Count > 0)
+        {
+            await _db.InsertAllAsync(notifications); // insert new notifications into db
+        }
     }
+
+    
 }

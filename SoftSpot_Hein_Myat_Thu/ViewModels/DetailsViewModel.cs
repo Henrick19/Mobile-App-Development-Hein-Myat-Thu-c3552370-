@@ -103,7 +103,7 @@ public class DetailsViewModel : BaseViewModel
 
         // refresh from storage so UI can updates
 
-        var updatedButton = (await _placeService.GetAllPlacesAsync()).FirstOrDefault(p => p.Id == SelectedPlace.Id || p.Name == SelectedPlace.Name);
+        var updatedButton = (await _placeService.GetPlacesAsync()).FirstOrDefault(p => p.Id == SelectedPlace.Id || p.Name == SelectedPlace.Name);
         if (updatedButton != null) 
         { 
             SelectedPlace = updatedButton;
@@ -121,7 +121,7 @@ public class DetailsViewModel : BaseViewModel
 
         await _placeService.SetNotifyWhenQuietAsync(SelectedPlace, newValue); // Save the newvalue into storage via placeservice
 
-        var places = await _placeService.GetAllPlacesAsync(); // refresh data from storage
+        var places = await _placeService.GetPlacesAsync(); // refresh data from storage
 
         Place updated = places.FirstOrDefault(p => p.Id == SelectedPlace.Id || p.Name == SelectedPlace.Name);
 

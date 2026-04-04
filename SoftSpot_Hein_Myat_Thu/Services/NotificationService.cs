@@ -7,8 +7,6 @@ namespace SoftSpot_Hein_Myat_Thu.Services;
 public class NotificationService : IAppNotificationService
 {
     private readonly IStorageService _storageService;
-    private const string NotificationsFileName = "notifications.json";
-
     public NotificationService(IStorageService storageService)
     {
         _storageService = storageService;   

@@ -5,55 +5,73 @@ namespace SoftSpot_Hein_Myat_Thu.Services;
 public class PlaceService : IPlaceService
 {
     private readonly IStorageService _storageService;
-    private const string FileName = "places.json";
-
+    
     public PlaceService(IStorageService storageService)
     {
         _storageService = storageService;
     }
 
-    public async Task<List<Place>> GetAllPlacesAsync() // This method retrieves all places from storage. If no places are found, it seeds the storage with default places.
+    public async Task<List<Place>> GetPlacesAsync() // This method retrieves all places from storage. If no places are found, it seeds the storage with default places.
     {
-        var places = await _storageService.LoadAsync<List<Place>>(FileName); 
+        var places = await _storageService.GetAllPlacesAsync();
 
         if (places == null || places.Count == 0) 
         {
             places = GetSeedPlaces();
-            await _storageService.SaveAsync(FileName, places);
+            await _storageService.SavePlacesAsync(places);
         }
         return places;
     }
 
     public async Task AddAsync(Place place) // This method adds a new place to the existing list of places and saves it back to storage.
     {
-        var places = await GetAllPlacesAsync();
+        var places = await GetPlacesAsync();
         places.Add(place);
-        await _storageService.SaveAsync(FileName, places);
+        await _storageService.SavePlacesAsync(places);
     }
 
     // for addtofav button from detail page
     public async Task AddToFavouriteAsync(Place place)
     {
-        var places = await GetAllPlacesAsync();
+        var places = await GetPlacesAsync();
         var foundPlace = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name); // give the place that match ID and name firstly
         if (foundPlace != null)
         {
             foundPlace.IsFavorite = true;
 
-            await _storageService.SaveAsync(FileName, places); // save updated list back to storage
+            await _storageService.SavePlacesAsync(places); // save updated list back to storage
         }
     }
 
     // remove from fav
     public async Task RemoveFromFavouriteAsync(Place place)
     {
-        var places = await GetAllPlacesAsync();
+        var places = await GetPlacesAsync();
         var foundPlaces = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name);
         if (foundPlaces != null)
         {
             foundPlaces.IsFavorite = false;
 
-            await _storageService.SaveAsync(FileName, places);
+            await _storageService.SavePlacesAsync(places);
+        }
+    }
+
+    // clear all fav
+    public async Task ClearAllFavouritesAsync()
+    {
+        var places = await GetPlacesAsync();
+        var updated = false;
+        foreach (var place in places)
+        {
+            if (place.IsFavorite)
+            {
+                place.IsFavorite = false;
+                updated = true;
+            }
+        }
+        if (updated)
+        {
+            await _storageService.SavePlacesAsync(places);
         }
     }
 
@@ -61,7 +79,7 @@ public class PlaceService : IPlaceService
 
     public async Task SetNotifyWhenQuietAsync(Place place, bool value)
     {
-        var places = await GetAllPlacesAsync();
+        var places = await GetPlacesAsync();
 
         var foundPlace = places.FirstOrDefault(p => p.Id == place.Id || p.Name == place.Name);
 
@@ -69,7 +87,7 @@ public class PlaceService : IPlaceService
         {
             foundPlace.NotifyWhenQuiet = value;
 
-            await _storageService.SaveAsync(FileName, places);
+            await _storageService.SavePlacesAsync(places);
         }
     }
 

@@ -1,5 +1,4 @@
-﻿using SoftSpot_Hein_Myat_Thu.Models;
-using SoftSpot_Hein_Myat_Thu.ViewModels;
+﻿using SoftSpot_Hein_Myat_Thu.ViewModels;
 
 namespace SoftSpot_Hein_Myat_Thu.Views;
 

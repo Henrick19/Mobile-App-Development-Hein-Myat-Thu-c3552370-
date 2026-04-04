@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿
 namespace SoftSpot_Hein_Myat_Thu.Models;
 
 public class Place
@@ -18,7 +18,7 @@ public class Place
 
     // This property is used to display the star rating in the UI, but it is not serialized to JSON
 
-    [JsonIgnore]
+  
     public int DisplayStarCount
     {
         get {  return Rating; }
@@ -26,7 +26,7 @@ public class Place
 
     // filled and unfilled dots for noise and crowd level for detail page
     
-    [JsonIgnore]
+
     public int FilledNoiseDots
     {
         get
@@ -39,7 +39,7 @@ public class Place
         }
     }
 
-    [JsonIgnore]
+
     public int FilledCrowdDots
     {
         get
