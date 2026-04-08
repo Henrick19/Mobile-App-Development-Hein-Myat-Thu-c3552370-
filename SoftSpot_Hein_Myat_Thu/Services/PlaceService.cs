@@ -5,7 +5,7 @@ namespace SoftSpot_Hein_Myat_Thu.Services;
 public class PlaceService : IPlaceService
 {
     private readonly IStorageService _storageService;
-    
+
     public PlaceService(IStorageService storageService)
     {
         _storageService = storageService;
@@ -15,7 +15,7 @@ public class PlaceService : IPlaceService
     {
         var places = await _storageService.GetAllPlacesAsync();
 
-        if (places == null || places.Count == 0) 
+        if (places == null || places.Count == 0)
         {
             places = GetSeedPlaces();
             await _storageService.SavePlacesAsync(places);

@@ -1,11 +1,11 @@
 ﻿using SoftSpot_Hein_Myat_Thu.Models;
 using SoftSpot_Hein_Myat_Thu.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Input; 
+using System.Windows.Input;
 
 namespace SoftSpot_Hein_Myat_Thu.ViewModels;
 
-public class HomeViewModel : BaseViewModel 
+public class HomeViewModel : BaseViewModel
 {
     private readonly IPlaceService _placeService;   // service to manage place data, injected via the constructor
     private readonly IStorageService _storageService; // service to manage data storage, injected via the constructor
@@ -20,10 +20,10 @@ public class HomeViewModel : BaseViewModel
     private string _searchText = string.Empty;
     public string SearchText
     {
-        get { return _searchText; } 
-        set 
-        { 
-            if (SetProperty(ref _searchText, value)) 
+        get { return _searchText; }
+        set
+        {
+            if (SetProperty(ref _searchText, value))
             {
                 ApplyFilters(); // Re-apply filters when search text changes
             }
@@ -138,10 +138,11 @@ public class HomeViewModel : BaseViewModel
     }
 
     // helper methods for the commands
-    private async void ExecuteLoadCommand() { 
+    private async void ExecuteLoadCommand()
+    {
         await LoadPlaces();
     }
-    private void ToggleQuietFilter() 
+    private void ToggleQuietFilter()
     {
         FilterQuiet = !FilterQuiet;
     }
@@ -204,7 +205,7 @@ public class HomeViewModel : BaseViewModel
         foreach (Place place in _allPlaces)
         {
             bool includePlace = true;
-            
+
             // search filter
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
@@ -234,7 +235,7 @@ public class HomeViewModel : BaseViewModel
                 {
                     includePlace = false;
                 }
-               
+
             }
 
             // wifi filter
@@ -250,7 +251,7 @@ public class HomeViewModel : BaseViewModel
             if (includePlace)
             {
                 filtered.Add(place);
-            } 
+            }
         }
         // sort the filtered list based on user preferences 
 
@@ -276,7 +277,7 @@ public class HomeViewModel : BaseViewModel
                     {
                         quietScore = Math.Abs((int)p.NoiseLevel - (int)preferredQuiet);
                     }
-                    
+
                     // Calculate crowd preference difference
                     if (hasCrowdPref)
                     {
@@ -287,7 +288,7 @@ public class HomeViewModel : BaseViewModel
                     return quietScore + crowdScore;
                 })
                 .ThenBy(p => p.Name)
-                .ToList(); 
+                .ToList();
         }
 
         // Add final filtered places to the ObservableCollection
@@ -296,7 +297,7 @@ public class HomeViewModel : BaseViewModel
             _places.Add(place);
         }
 
-        
+
     }
 
 

@@ -42,7 +42,7 @@ public class DetailsViewModel : BaseViewModel
 
     public ICommand AddToFavouriteCommand { get; }
     public ICommand NotifyWhenQuietCommand { get; }
-    public ICommand OpenMapCommand { get; } 
+    public ICommand OpenMapCommand { get; }
 
     public DetailsViewModel(IPlaceService placeService, IAppNotificationService notificationService)
     {
@@ -54,7 +54,7 @@ public class DetailsViewModel : BaseViewModel
         AddToFavouriteCommand = new Command(AddToFav);
 
         NotifyWhenQuietCommand = new Command(NotifyQuiet);
-       
+
     }
 
     private async void OpenMap()
@@ -104,8 +104,8 @@ public class DetailsViewModel : BaseViewModel
         // refresh from storage so UI can updates
 
         var updatedButton = (await _placeService.GetPlacesAsync()).FirstOrDefault(p => p.Id == SelectedPlace.Id || p.Name == SelectedPlace.Name);
-        if (updatedButton != null) 
-        { 
+        if (updatedButton != null)
+        {
             SelectedPlace = updatedButton;
         }
     }

@@ -14,12 +14,12 @@ public class NotificationsViewModel : BaseViewModel
 
     public ObservableCollection<Notification> Notifications
     {
-        get {  return _notifications; }
+        get { return _notifications; }
     }
     public ICommand LoadCommand { get; }
     public ICommand MarkAllReadCommand { get; }
     public ICommand DeleteCommand { get; }
-    public ICommand ClearAllCommand { get; }    
+    public ICommand ClearAllCommand { get; }
 
     public NotificationsViewModel(IStorageService storageService)
     {
@@ -33,11 +33,11 @@ public class NotificationsViewModel : BaseViewModel
 
         ClearAllCommand = new Command(ExecuteClearCommand);
 
-       
+
     }
 
     // helper methods
-    
+
     private async void ExecuteLoadCommand()
     {
         await LoadNotifications();
@@ -57,8 +57,8 @@ public class NotificationsViewModel : BaseViewModel
     {
         await ClearAllAsync();
     }
-    private async Task LoadNotifications() 
-    { 
+    private async Task LoadNotifications()
+    {
         Notifications.Clear();
         var list = await _storageService.GetAllNotificationsAsync();
 

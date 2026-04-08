@@ -22,7 +22,7 @@ public class SettingsViewModel : BaseViewModel
             if (SetProperty(ref _newPlaceAlert, value)) // update the value and notify UI
             {
                 Preferences.Set(KeyNewPlaceAlert, value); // save the value to preferences
-            } 
+            }
         }
     }
 
@@ -70,7 +70,7 @@ public class SettingsViewModel : BaseViewModel
     // options for crowd and quiet level picters
     public IList<string> CrowdLevelOptions { get; } = new List<string> { "N/A", "Low", "Medium", "High" };
     public IList<string> QuietLevelOptions { get; } = new List<string> { "N/A", "Low", "Medium", "High" };
-    
+
     // constructor
     public SettingsViewModel()
     {

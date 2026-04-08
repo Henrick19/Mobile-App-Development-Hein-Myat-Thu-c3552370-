@@ -7,7 +7,7 @@ public class BaseViewModel : INotifyPropertyChanged // implements the INotifyPro
 {
     public event PropertyChangedEventHandler? PropertyChanged; // event that is raised when a property value changes
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
@@ -15,7 +15,7 @@ public class BaseViewModel : INotifyPropertyChanged // implements the INotifyPro
     // this method will be used in the viiew models' setters
     protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string? propertyName = null) // generic method that sets the value of a property and raises the PropertyChanged event if the value has changed
     {
-        if (EqualityComparer<T>.Default.Equals(backingStore, value)) 
+        if (EqualityComparer<T>.Default.Equals(backingStore, value))
             return false;
 
 
@@ -25,4 +25,3 @@ public class BaseViewModel : INotifyPropertyChanged // implements the INotifyPro
     }
 
 }
-

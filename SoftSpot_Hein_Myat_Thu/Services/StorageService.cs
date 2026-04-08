@@ -9,7 +9,7 @@ public class StorageService : IStorageService
 
     private readonly SQLiteAsyncConnection _db; // async connection
 
-  
+
     private bool _initialized;
 
     public StorageService()
@@ -27,8 +27,8 @@ public class StorageService : IStorageService
 
         await _db.CreateTableAsync<Place>();
         await _db.CreateTableAsync<Notification>();
-        _initialized = true;   
-        
+        _initialized = true;
+
     }
 
     // get all places from db
@@ -80,5 +80,5 @@ public class StorageService : IStorageService
         }
     }
 
-    
+
 }

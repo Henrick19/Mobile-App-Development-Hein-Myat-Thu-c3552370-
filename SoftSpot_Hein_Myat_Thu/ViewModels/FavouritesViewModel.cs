@@ -25,7 +25,7 @@ public class FavouritesViewModel : BaseViewModel
     {
         _placeService = placeService;
         _notificationService = notificationService;
-        LoadCommand = new Command (ExecuteLoadCommand);
+        LoadCommand = new Command(ExecuteLoadCommand);
         ClearAllCommand = new Command(ExecuteClearAllCommand);
         PlaceTappedCommand = new Command<Place>(OnPlaceTapped);
     }
@@ -63,8 +63,8 @@ public class FavouritesViewModel : BaseViewModel
         await LoadFav(); // reload the list after clearing 
 
         // for notification
-        if (hasFav) 
-        { 
+        if (hasFav)
+        {
             string title = "Favourites Cleared";
             string message = "All places have been removed from your favourites.";
 

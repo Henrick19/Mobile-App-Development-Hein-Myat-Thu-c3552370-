@@ -15,7 +15,7 @@ public class AddPlaceViewModel : BaseViewModel
     public ObservableCollection<string> _bestTimeOptions = new ObservableCollection<string>();
 
     // for rating picker
-    public ObservableCollection<int> _ratingOptions = new ObservableCollection<int> { 1, 2, 3, 4, 5};
+    public ObservableCollection<int> _ratingOptions = new ObservableCollection<int> { 1, 2, 3, 4, 5 };
 
     public ObservableCollection<string> BestTimeOptions
     {
@@ -30,8 +30,9 @@ public class AddPlaceViewModel : BaseViewModel
     // properties bound to the form fields
 
     private string _name;
-    public string Name { 
-        get { return _name; } 
+    public string Name
+    {
+        get { return _name; }
 
         set
         {
@@ -92,7 +93,7 @@ public class AddPlaceViewModel : BaseViewModel
     {
         get { return _hasWifi; }
 
-        set 
+        set
         {
             SetProperty(ref _hasWifi, value);
         }
@@ -150,7 +151,7 @@ public class AddPlaceViewModel : BaseViewModel
 
         set
         {
-            SetProperty(ref _description, value); 
+            SetProperty(ref _description, value);
         }
     }
 
@@ -158,10 +159,10 @@ public class AddPlaceViewModel : BaseViewModel
     public int Rating
     {
         get { return _rating; }
-        
+
         set
         {
-            SetProperty(ref _rating, value); 
+            SetProperty(ref _rating, value);
         }
     }
 
@@ -191,7 +192,7 @@ public class AddPlaceViewModel : BaseViewModel
 
     private async Task AddPlace()
     {
-        if (string.IsNullOrWhiteSpace(Name)) 
+        if (string.IsNullOrWhiteSpace(Name))
         {
             return;
         }

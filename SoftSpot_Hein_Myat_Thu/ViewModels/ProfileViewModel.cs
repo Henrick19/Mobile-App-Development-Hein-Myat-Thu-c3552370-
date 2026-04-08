@@ -6,7 +6,7 @@ namespace SoftSpot_Hein_Myat_Thu.ViewModels
     public class ProfileViewModel : BaseViewModel
     {
         private readonly IStorageService _storageService;
-        
+
 
         private int _unreadNotificationCount;
         public int UnreadNotificationCount
