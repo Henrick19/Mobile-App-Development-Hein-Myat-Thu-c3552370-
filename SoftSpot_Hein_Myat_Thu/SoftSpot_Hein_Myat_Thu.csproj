@@ -28,7 +28,7 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>SoftSpot_Hein_Myat_Thu</ApplicationTitle>
+		<ApplicationTitle>SoftSpot</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.softspot_hein_myat_thu</ApplicationId>
@@ -49,10 +49,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#132b67" BaseSize="940,940" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

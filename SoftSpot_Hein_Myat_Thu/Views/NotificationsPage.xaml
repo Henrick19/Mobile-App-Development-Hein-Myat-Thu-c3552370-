@@ -21,8 +21,8 @@
 					Padding="0,8,0,12" />
 			<Label Grid.Column="1" Text="Notifications" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
 			<Button Grid.Column="2"
-					Text="Mark All Read"
-					FontSize="24"
+					Text="Mark all as read"
+					FontSize="18"
 					BackgroundColor="Transparent"
 					TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
 					Command="{Binding MarkAllReadCommand}"

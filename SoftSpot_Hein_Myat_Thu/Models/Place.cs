@@ -15,9 +15,6 @@ public class Place
     public bool IsFavorite { get; set; }
     public bool NotifyWhenQuiet { get; set; }
     public int Rating { get; set; } = 3;
-
-    // This property is used to display the star rating in the UI, but it is not serialized to JSON
-
   
     public int DisplayStarCount
     {

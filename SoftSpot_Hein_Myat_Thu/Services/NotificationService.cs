@@ -12,6 +12,7 @@ public class NotificationService : IAppNotificationService
         _storageService = storageService;
     }
 
+    // method to show a notification 
     public async Task ShowNotification(string title, string message, NotificationType type)
     {
         NotificationRequest request = new NotificationRequest(); // create request via Plugin.LocalNotification
@@ -23,6 +24,35 @@ public class NotificationService : IAppNotificationService
             await LocalNotificationCenter.Current.Show(request);
         }
         await SaveNewNotificationAsync(title, message, type);
+    }
+
+    // method to schedule a notification 
+    public async Task ScheduleNotification(string title, string message, DateTime notifyTime, NotificationType type, int notificationId)
+    {
+        NotificationRequest request = new NotificationRequest
+        {
+            NotificationId = notificationId,
+            Title = title,
+            Description = message,
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = notifyTime
+            }
+        };
+
+        if (LocalNotificationCenter.Current != null)
+        {
+            await LocalNotificationCenter.Current.Show(request);
+        }
+
+        await SaveNewNotificationAsync(title, message, type);
+    }
+
+    // method to cancel a scheduled notification
+    public Task CancelScheduledNotification(int notificationId) // method is not async because LocalNotificationCenter.Current.Cancel is not async
+    {
+        LocalNotificationCenter.Current?.Cancel(notificationId);
+        return Task.CompletedTask; // return completed task since this method is not async
     }
 
     private async Task SaveNewNotificationAsync(string title, string message, NotificationType type)

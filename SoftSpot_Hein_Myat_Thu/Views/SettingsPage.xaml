@@ -9,15 +9,18 @@
 
 	<ScrollView>
 		<VerticalStackLayout Padding="20" Spacing="0">
-            <Label Text="Settings" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
-            
-			<Button Text="←"
-					FontSize="24"
-                    BackgroundColor="Transparent"
-					TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
-					Clicked="OnBackClicked"
-                    HorizontalOptions="Start" 
-                    Padding="0,8,0,16" />
+            <HorizontalStackLayout Spacing="60" Margin="0,8,0,12">
+                <!-- back arrow and page title -->
+                <Button Text="⬅"
+                        FontSize="24"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
+                        Clicked="OnBackClicked"
+                        HorizontalOptions="Start"
+                        Padding="0,8,0,12" />
+                <Label Text="Settings" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
 
             <!-- Notifications section -->
             <HorizontalStackLayout Spacing="8" Margin="0,0,0,8">

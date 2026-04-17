@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
 
+#if ANDROID
+using SoftSpot_Hein_Myat_Thu.Platforms.Android;
+#endif
 using SoftSpot_Hein_Myat_Thu.Services;
 using SoftSpot_Hein_Myat_Thu.ViewModels;
 using SoftSpot_Hein_Myat_Thu.Views;
@@ -15,7 +18,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
-#if ANDROID || IOS || MACCATALYST
+#if IOS || MACCATALYST
             .UseLocalNotification()
 #endif
             .ConfigureFonts(fonts =>
@@ -33,7 +36,11 @@ public static class MauiProgram
         // =============================
         builder.Services.AddSingleton<IStorageService, StorageService>();
         builder.Services.AddSingleton<IPlaceService, PlaceService>();
+#if ANDROID
+        builder.Services.AddSingleton<IAppNotificationService, AndroidNotificationService>();
+#else
         builder.Services.AddSingleton<IAppNotificationService, NotificationService>();
+#endif
 
         // =============================
         // ViewModels

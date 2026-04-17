@@ -1,8 +1,8 @@
-﻿using Plugin.LocalNotification;
-using SoftSpot_Hein_Myat_Thu.Models;
+﻿using SoftSpot_Hein_Myat_Thu.Models;
 using SoftSpot_Hein_Myat_Thu.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Microsoft.Maui.Storage;
 
 namespace SoftSpot_Hein_Myat_Thu.ViewModels;
 
@@ -245,10 +245,14 @@ public class AddPlaceViewModel : BaseViewModel
         // save the new place using the service
         await _placeService.AddAsync(newPlace);
 
-        await _notificationService.ShowNotification(
-            "New place added",
-            $"{newPlace.Name} was added to SoftSpot.",
-            NotificationType.NewPlaceAlert);
+        bool newPlaceAlertEnabled = Preferences.Get("NewPlaceAlert", false);
+        if (newPlaceAlertEnabled)
+        {
+            await _notificationService.ShowNotification(
+                "New place added",
+                $"{newPlace.Name} was added to SoftSpot.",
+                NotificationType.NewPlaceAlert);
+        }
 
         // reset the form
         Name = string.Empty;
