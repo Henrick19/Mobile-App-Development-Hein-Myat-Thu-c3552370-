@@ -20,13 +20,33 @@
                         Padding="0,8,0,12" />
                 <Label Text="Add a Quiet Place" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
             </HorizontalStackLayout>
-            
+
+            <!-- submission status message -->
+            <Frame IsVisible="{Binding IsSubmissionStatusVisible}" 
+                   Padding="12,8"
+                   CornerRadius="10"
+                   BorderColor="Transparent"
+                   BackgroundColor="#FEE2E2">
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding IsSubmissionSuccessful}" Value="True">
+                        <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                    </DataTrigger>
+                </Frame.Triggers>
+                <Label Text="{Binding SubmissionStatusMessage}" TextColor="#991B1B">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsSubmissionSuccessful}" Value="True">
+                            <Setter Property="TextColor" Value="#166534" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Frame>
+
             <!-- place name -->
-            <Label Text="Place name" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Label Text="Place name *" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
             <Entry Placeholder="E.g., Bishan Public Library"
 				   Text="{Binding Name}" />
             <!-- location -->
-            <Label Text="Location" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Label Text="Location *" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
             <Entry Placeholder="Paste Google Maps link"
 				   Text="{Binding LocationLink}" />
             <!-- type (picker) -->
@@ -70,7 +90,7 @@
                 <Label Text="Wi-Fi Available" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
             </HorizontalStackLayout>
             <!-- best time form !-->
-            <Label Text="Best Time to Visit" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+            <Label Text="Best Time to Visit *" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <Picker Grid.Column="0" Title="From" ItemsSource="{Binding BestTimeOptions}" SelectedItem="{Binding BestTimeFrom}"/>
                 <Picker Grid.Column="1" Title="To" ItemsSource="{Binding BestTimeOptions}" SelectedItem="{Binding BestTimeTo}"/>

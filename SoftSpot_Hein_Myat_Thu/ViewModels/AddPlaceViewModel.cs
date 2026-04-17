@@ -2,7 +2,7 @@
 using SoftSpot_Hein_Myat_Thu.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Microsoft.Maui.Storage;
+
 
 namespace SoftSpot_Hein_Myat_Thu.ViewModels;
 
@@ -166,6 +166,29 @@ public class AddPlaceViewModel : BaseViewModel
         }
     }
 
+    // properties for submission status message and visibility
+
+    private string _submissionStatusMessage = string.Empty;
+    public string SubmissionStatusMessage
+    {
+        get { return _submissionStatusMessage; }
+        set { SetProperty(ref _submissionStatusMessage, value); }
+    }
+
+    private bool _isSubmissionStatusVisible;
+    public bool IsSubmissionStatusVisible
+    {
+        get { return _isSubmissionStatusVisible; }
+        set { SetProperty(ref _isSubmissionStatusVisible, value); }
+    }
+
+    private bool _isSubmissionSuccessful;
+    public bool IsSubmissionSuccessful
+    {
+        get { return _isSubmissionSuccessful; }
+        set { SetProperty(ref _isSubmissionSuccessful, value); }
+    }
+
     public ICommand SubmitCommand { get; } // command bound to the "Submit" button in the UI
 
     public AddPlaceViewModel(IPlaceService placeService, IAppNotificationService notificationService)
@@ -192,8 +215,24 @@ public class AddPlaceViewModel : BaseViewModel
 
     private async Task AddPlace()
     {
-        if (string.IsNullOrWhiteSpace(Name))
+        // checking wether required fields are filled in, if not show error message 
+        if (string.IsNullOrWhiteSpace(Name) ||
+            string.IsNullOrWhiteSpace(LocationLink) ||
+            string.IsNullOrWhiteSpace(BestTimeFrom) ||
+            string.IsNullOrWhiteSpace(BestTimeTo))
         {
+            await ShowSubmissionStatusAsync("Please fill all required fields: Place Name, Location, and Best Time (From/To).", false);
+            return;
+        }
+
+        Name = Name.Trim();
+        LocationLink = LocationLink.Trim();
+
+        // checking if a place with the same name already exists in the app, if yes show error message
+        bool alreadyExists = await _placeService.ExistsByNameAsync(Name, LocationLink);
+        if (alreadyExists)
+        {
+            await ShowSubmissionStatusAsync("This place name already exists in the App.", false);
             return;
         }
 
@@ -254,6 +293,8 @@ public class AddPlaceViewModel : BaseViewModel
                 NotificationType.NewPlaceAlert);
         }
 
+        await ShowSubmissionStatusAsync("Place submitted successfully.", true);
+
         // reset the form
         Name = string.Empty;
         LocationLink = string.Empty;
@@ -266,5 +307,17 @@ public class AddPlaceViewModel : BaseViewModel
         Description = string.Empty;
         Rating = 3;
 
+    }
+
+    // helper method to show submission status message for 2.5 seconds
+    private async Task ShowSubmissionStatusAsync(string message, bool isSuccess)
+    {
+        SubmissionStatusMessage = message;
+        IsSubmissionSuccessful = isSuccess;
+        IsSubmissionStatusVisible = true; 
+
+        await Task.Delay(2500);
+
+        IsSubmissionStatusVisible = false;
     }
 }

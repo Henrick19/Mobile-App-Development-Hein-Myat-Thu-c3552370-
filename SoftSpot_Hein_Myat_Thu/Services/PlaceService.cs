@@ -30,6 +30,38 @@ public class PlaceService : IPlaceService
         await _storageService.SavePlacesAsync(places);
     }
 
+    // checking whether the place is already exist in the app
+    public async Task<bool> ExistsByNameAsync(string placeName, string locationLink)
+    {
+        if (string.IsNullOrWhiteSpace(placeName) || string.IsNullOrWhiteSpace(locationLink))
+        {
+            return false;
+        }
+
+        var normalizedName = placeName.Trim();
+        var normalizedLocationLink = locationLink.Trim();
+        var places = await GetPlacesAsync(); // get all places from storage
+
+        // check if any existing place has the same name and location link with new place
+        foreach (var place in places)
+        {
+            if (!string.IsNullOrWhiteSpace(place.Name) &&
+                !string.IsNullOrWhiteSpace(place.LocationLink))
+            {
+                string existingName = place.Name.Trim();
+                string existingLocationLink = place.LocationLink.Trim();
+
+                if (string.Equals(existingName, normalizedName, StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(existingLocationLink, normalizedLocationLink, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     // for addtofav button from detail page
     public async Task AddToFavouriteAsync(Place place)
     {

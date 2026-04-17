@@ -6,6 +6,7 @@ public interface IPlaceService
 {
     Task<List<Place>> GetPlacesAsync();
     Task AddAsync(Place place);
+    Task<bool> ExistsByNameAsync(string placeName, string locationLink);
     Task AddToFavouriteAsync(Place place);
     Task RemoveFromFavouriteAsync(Place place);
 
