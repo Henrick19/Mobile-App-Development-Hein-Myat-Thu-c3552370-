@@ -115,7 +115,8 @@
                     <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
                         <SearchBar Grid.Column="0"
                                    Placeholder="Search quiet places..."
-                                   Text="{Binding SearchText}" />
+                                   Text="{Binding SearchText}" 
+                                   SearchCommand="{Binding SearchCommand}" />
 
                         <Button Grid.Column="1"
                                 Text="+"
@@ -147,12 +148,6 @@
         </CollectionView.Header>
 
         <!-- Places list -->
-        <CollectionView.EmptyView>
-            <Label Text="No places found."
-                   HorizontalOptions="Center"
-                   Margin="0,24,0,0"
-                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
-        </CollectionView.EmptyView>
 
         <CollectionView.ItemTemplate>
             <DataTemplate>

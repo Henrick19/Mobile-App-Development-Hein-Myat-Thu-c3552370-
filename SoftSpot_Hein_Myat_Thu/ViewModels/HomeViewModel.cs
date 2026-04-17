@@ -17,19 +17,15 @@ public class HomeViewModel : BaseViewModel
         get { return _places; }
     }
 
+   
     private string _searchText = string.Empty;
     public string SearchText
     {
         get { return _searchText; }
-        set
-        {
-            if (SetProperty(ref _searchText, value))
-            {
-                ApplyFilters(); // Re-apply filters when search text changes
-            }
-        }
-
+        set { SetProperty(ref _searchText, value); }
     }
+    
+    
     // UI filter buttons binding
 
     private bool _filterQuiet;
@@ -116,12 +112,15 @@ public class HomeViewModel : BaseViewModel
     }
 
     public ICommand LoadCommand { get; } // Command to load places when the page appears
+    public ICommand SearchCommand { get; } // command to search a place
 
     // Command to toggle the filter when the button is clicked
     public ICommand ToggleQuietFilterCommand { get; }
     public ICommand ToggleCrowdFilterCommand { get; }
     public ICommand ToggleWifiFilterCommand { get; }
     public ICommand PlaceTappedCommand { get; }
+
+
 
 
     // Constructor with dependency injection for services
@@ -131,6 +130,7 @@ public class HomeViewModel : BaseViewModel
         _storageService = storageService;
 
         LoadCommand = new Command(ExecuteLoadCommand);
+        SearchCommand = new Command(ApplyFilters); // this command will apply filters when the search button is clicked
         ToggleQuietFilterCommand = new Command(ToggleQuietFilter);
         ToggleCrowdFilterCommand = new Command(ToggleCrowdFilter);
         ToggleWifiFilterCommand = new Command(ToggleWifiFilter);
