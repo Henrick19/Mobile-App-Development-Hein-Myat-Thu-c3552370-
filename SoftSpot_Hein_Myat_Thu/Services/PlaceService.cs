@@ -51,7 +51,7 @@ public class PlaceService : IPlaceService
                 string existingName = place.Name.Trim();
                 string existingLocationLink = place.LocationLink.Trim();
 
-                if (string.Equals(existingName, normalizedName, StringComparison.OrdinalIgnoreCase) &&
+                if (string.Equals(existingName, normalizedName, StringComparison.OrdinalIgnoreCase) ||
                     string.Equals(existingLocationLink, normalizedLocationLink, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
